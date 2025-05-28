@@ -1,0 +1,3 @@
+First new log
+Second new log
+Third new log
