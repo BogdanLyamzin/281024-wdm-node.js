@@ -26,7 +26,7 @@
 // const formatDate = `${year}/${month}/${day}`;
 // console.log(formatDate);
 
-import { DateTime } from "luxon";
+// import { DateTime } from "luxon";
 
 // const now = DateTime.now();
 // console.log(now);
@@ -51,6 +51,8 @@ import { DateTime } from "luxon";
 // console.log(date);
 // const date = DateTime.now();
 // console.log(date.zone);
+
+import "dotenv/config";
 
 import {getCurrentWeatherByCity} from "./weatherApi.js";
 
