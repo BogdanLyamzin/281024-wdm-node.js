@@ -39,10 +39,10 @@ const startServer = ()=> {
       res.json(result);
     });
     
-    app.get("/api/products/:id", (req, res) => {
-      const id = Number(req.params.id);
-      const result = products.find((item) => item.id === id);
-    
+    app.get("/api/products/:id", async (req, res) => {
+      const {id} = req.params;
+      const result = await Product.findByPk(id);
+
       if (!result) {
         return res.status(404).json({
           message: `product with id=${id} not found`,
@@ -51,15 +51,13 @@ const startServer = ()=> {
     
       res.json(result);
     });
-    
+
     app.post("/api/products", async (req, res) => {
       try {
         await productAddSchema.validate(req.body);
-        const id = products[products.length - 1].id + 1;
-        const newProduct = { ...req.body, id };
-        products.push(newProduct);
+        const result = await Product.create(req.body);
     
-        res.status(201).json(newProduct);
+        res.status(201).json(result);
       } catch (error) {
         res.status(400).json({
           message: error.message,
@@ -70,17 +68,20 @@ const startServer = ()=> {
     app.put("/api/products/:id", async (req, res) => {
       try {
         await productUpdateSchema.validate(req.body);
-        const id = Number(req.params.id);
-        const idx = products.findIndex((item) => item.id === id);
-        if (idx === -1) {
+
+        const {id} = req.params;
+        const result = await Product.findByPk(id);
+
+        if (!result) {
           return res.status(404).json({
             message: `product with id=${id} not found`,
           });
         }
-    
-        products[idx] = { ...products[idx], ...req.body };
-    
-        res.json(products[idx]);
+
+        await result.update(req.body);
+        // result.price = req.body.price;
+
+        res.json(result);
       } catch (error) {
         res.status(400).json({
           message: error.message,
@@ -88,22 +89,24 @@ const startServer = ()=> {
       }
     });
     
-    app.delete("/api/products/:id", (req, res) => {
-      const id = Number(req.params.id);
-      const idx = products.findIndex((item) => item.id === id);
-      if (idx === -1) {
+    app.delete("/api/products/:id", async (req, res) => {
+      const {id} = req.params;
+      const result = await Product.findByPk(id);
+
+      if (!result) {
         return res.status(404).json({
           message: `product with id=${id} not found`,
         });
       }
+
+      await result.destroy();
     
-      const [result] = products.splice(idx, 1);
-    
-      // res.status(204).send();
       res.json(result);
     });
+
+    const port = process.env.PORT || 3000;
     
-    app.listen(3000, () => console.log("Server running on 3000 port"));
+    app.listen(port, () => console.log("Server running on 3000 port"));
 }
 
 export default startServer;
