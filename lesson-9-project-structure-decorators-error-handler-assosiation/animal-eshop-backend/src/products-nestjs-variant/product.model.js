@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-import sequelize from "./sequelize.js";
+import sequelize from "../db/sequelize.js";
 
 const Product = sequelize.define(
     "product",
@@ -16,16 +16,6 @@ const Product = sequelize.define(
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
-        },
-        category: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "Categories",
-                key: "id"
-            },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
         }
     }
 );

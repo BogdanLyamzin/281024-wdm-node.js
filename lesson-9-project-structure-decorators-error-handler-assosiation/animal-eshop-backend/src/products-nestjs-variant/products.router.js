@@ -1,54 +1,36 @@
 import { Router } from "express";
-import { ValidationError } from "sequelize";
 
-import Product from "../db/Product.js";
+import { productAddSchema, productUpdateSchema } from "./products.dto.js";
 
-import { productAddSchema, productUpdateSchema } from "../validation/product.schemas.js";
+import Product from "./product.model.js";
 
 const productsRouter = Router();
 
 productsRouter.get("/", async (req, res) => {
-  try {
-    const result = await Product.findAll(); 
-    res.json(result);
-  }
-  catch(error) {
-    res.status(500).json({
-      message: error.message,
-    })
-  }
+  const result = await Product.findAll();
+  res.json(result);
 });
 
 productsRouter.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await Product.findByPk(id);
-  
-    if (!result) {
-      return res.status(404).json({
-        message: `product with id=${id} not found`,
-      });
-    }
-  
-    res.json(result);
+  const { id } = req.params;
+  const result = await Product.findByPk(id);
+
+  if (!result) {
+    return res.status(404).json({
+      message: `product with id=${id} not found`,
+    });
   }
-  catch(error) {
-    res.status(500).json({
-      message: error.message
-    })
-  }
+
+  res.json(result);
 });
 
 productsRouter.post("/", async (req, res) => {
   try {
-    // await productAddSchema.validate(req.body);
+    await productAddSchema.validate(req.body);
     const result = await Product.create(req.body);
 
-    res.status(201).json(result); 
+    res.status(201).json(result);
   } catch (error) {
-    if(error instanceof ValidationError) {
-      console.log("validation error");
-    }
     res.status(400).json({
       message: error.message,
     });
@@ -57,7 +39,7 @@ productsRouter.post("/", async (req, res) => {
 
 productsRouter.put("/:id", async (req, res) => {
   try {
-    // await productUpdateSchema.validate(req.body);
+    await productUpdateSchema.validate(req.body);
 
     const { id } = req.params;
     const result = await Product.findByPk(id);
