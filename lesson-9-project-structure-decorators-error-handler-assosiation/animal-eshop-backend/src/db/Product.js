@@ -17,16 +17,16 @@ const Product = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        category: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "Categories",
-                key: "id"
-            },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
-        }
+        // category: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: "Categories",
+        //         key: "id"
+        //     },
+        //     onUpdate: "CASCADE",
+        //     onDelete: "SET NULL",
+        // }
     }
 );
 
