@@ -2,6 +2,8 @@ import { DataTypes } from "sequelize";
 
 import sequelize from "./sequelize.js";
 
+import Category from "./Category.js";
+
 const Product = sequelize.define(
     "product",
     {
@@ -17,19 +19,27 @@ const Product = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        // category: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        //     references: {
-        //         model: "Categories",
-        //         key: "id"
-        //     },
-        //     onUpdate: "CASCADE",
-        //     onDelete: "SET NULL",
-        // }
+        categoryId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Category,
+                key: "id"
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        }
     }
 );
 
-// Product.sync();
+Product.associate = models => {
+    Product.belongsTo(models.Category, {
+        foreignKey: "categoryId",
+        as: "category"
+    })
+}
+
+// Product.sync({force: true});
+
 
 export default Product;

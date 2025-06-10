@@ -4,6 +4,7 @@ import cors from "cors";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
 
 import productsRouter from "./routers/products.router.js";
+import categoriesRouter from "./routers/categories.router.js";
 
 const startServer = ()=> {
     const app = express();
@@ -12,6 +13,7 @@ const startServer = ()=> {
     app.use(express.json());
     
     app.use("/api/products", productsRouter);
+    app.use("/api/categories", categoriesRouter);
 
     app.use(notFoundHandler);
 
