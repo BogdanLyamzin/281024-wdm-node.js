@@ -1,7 +1,7 @@
 import Product from "../db/Product.js";
 import Category from "../db/Category.js";
 
-import controllerErrorHandler from "../decorators/ControllerErrorHandler.js";
+import controllerErrorHandler from "../decorators/controllerErrorHandler.js";
 
 import HttpException from "../utils/HttpException.js";
 

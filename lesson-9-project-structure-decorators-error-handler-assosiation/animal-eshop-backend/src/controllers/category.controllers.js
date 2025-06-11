@@ -1,6 +1,6 @@
 import Category from "../db/Category.js";
 
-import controllerErrorHandler from "../decorators/ControllerErrorHandler.js";
+import controllerErrorHandler from "../decorators/controllerErrorHandler.js";
 
 const addCategoryController = async(req, res)=> {
     const result = await Category.create(req.body);
