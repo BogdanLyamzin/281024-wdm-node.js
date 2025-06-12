@@ -2,10 +2,11 @@ import "dotenv/config";
 
 import { connectDatabase } from "./db/sequelize.js";
 import startServer from "./server.js";
+import "./db/Category.js";
 
 const bootstrap = async()=> {
-    await connectDatabase(); // throw new Error()
+    await connectDatabase(); 
     startServer();
 }
 
-bootstrap(); // throw new Error()
+bootstrap(); 

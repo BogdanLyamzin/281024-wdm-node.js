@@ -14,12 +14,13 @@ const sequelize = new Sequelize({
 
 export const connectDatabase = async()=> {
     try {
-        await sequelize.authenticate(); // throw new Error()
+        await sequelize.authenticate(); 
         console.log("Successfully connect database");
     }
     catch(error) {
         console.log("Error connect database");
         console.log(error);
-        // throw error;
     }
 }
+
+export default sequelize;
