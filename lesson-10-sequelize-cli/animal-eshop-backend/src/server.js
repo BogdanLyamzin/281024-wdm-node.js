@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import notFoundHandler from "./middlewares/notFoundHandler.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 import categoriesRouter from "./routers/categories.router.js";
 
@@ -14,6 +15,7 @@ const startServer = ()=> {
     app.use("/api/categories", categoriesRouter);
 
     app.use(notFoundHandler);
+    app.use(errorHandler);
 
     const port = process.env.PORT || 3000;
 

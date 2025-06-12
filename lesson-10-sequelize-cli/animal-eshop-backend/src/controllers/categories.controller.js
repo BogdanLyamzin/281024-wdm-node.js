@@ -7,5 +7,7 @@ export const getCategoriesController = async (req, res) => {
 };
 
 export const addCategoryController = async(req, res)=> {
-    
+    const result = await categoriesService.addCategory(req.body); // throw new Error()
+
+    res.status(201).json(result);
 }
