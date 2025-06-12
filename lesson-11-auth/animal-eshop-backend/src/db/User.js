@@ -5,7 +5,10 @@ import sequalize from "./sequelize.js";
 const User = sequalize.define("user", {
   email: {
     type: DataTypes.STRING,
-    unique: true,
+    unique: {
+        args: true,
+        msg: "user/manager/admin with with email already exist"
+    },
     allowNull: false,
     validate: {
       isEmail: {

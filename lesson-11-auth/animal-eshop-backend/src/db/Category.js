@@ -9,7 +9,10 @@ const Category = sequelize.define(
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            unique: true,
+            unique: {
+                args: true,
+                msg: "Category with this name already exist"
+            },
         },
         name: {
             type: DataTypes.STRING,
