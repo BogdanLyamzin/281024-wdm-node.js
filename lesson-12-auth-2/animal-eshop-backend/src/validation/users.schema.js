@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import { emailValidation, passwordValidation } from "../constants/users.constants.js";
 
-const passwordSchema = Yup.string()
+export const passwordSchema = Yup.string()
 .trim()
 .min(6)
 .matches(
@@ -11,11 +11,13 @@ const passwordSchema = Yup.string()
 )
 .required();
 
+export const emailSchema = Yup.string()
+.trim()
+.matches(emailValidation.value, emailValidation.message)
+.required();
+
 export const adminAddSchema = Yup.object({
-  email: Yup.string()
-    .trim()
-    .matches(emailValidation.value, emailValidation.message)
-    .required(),
+  email: emailSchema,
   password: passwordSchema,
 });
 

@@ -4,6 +4,7 @@ import cors from "cors";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
+import authRouter from "./routers/auth.router.js";
 import usersRouter from "./routers/users.router.js";
 import categoriesRouter from "./routers/categories.router.js";
 
@@ -13,6 +14,7 @@ const startServer = ()=> {
     app.use(cors());
     app.use(express.json());
 
+    app.use("/api/auth", authRouter);
     app.use("/api/users", usersRouter);
     app.use("/api/categories", categoriesRouter);
 

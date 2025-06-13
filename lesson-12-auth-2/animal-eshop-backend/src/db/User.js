@@ -8,15 +8,15 @@ const User = sequalize.define("user", {
   email: {
     type: DataTypes.STRING,
     unique: {
-        args: true,
-        msg: "user/manager/admin with with email already exist"
+      args: true,
+      msg: "user/manager/admin with with email already exist",
     },
     allowNull: false,
     validate: {
       is: {
         args: emailValidation.value,
         msg: emailValidation.message,
-      }
+      },
       // isEmail: {
       //   args: true,
       //   msg: "email mast contain @ and no contain spaces",
@@ -33,13 +33,13 @@ const User = sequalize.define("user", {
     allowNull: false,
     validate: {
       isIn: {
-        args: [["admin", "manager", "user"]],
-        msg: "Role can be only admin, manager or user",
+        args: [["superadmin", "admin", "manager", "user"]],
+        msg: "Role can be only superadmin, admin, manager or user",
       },
     },
   },
 });
 
-// User.sync();
+// User.sync({alter: true});
 
 export default User;

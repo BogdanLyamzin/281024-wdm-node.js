@@ -23,5 +23,5 @@ export const changeAdminPasswordController = async(req, res)=> {
 
   res.json({
     message: "Password change successfully"
-  })
+  });
 }
