@@ -6,5 +6,7 @@ import { loginSchema } from "../validation/auth.schema.js";
 
 export const loginController = async(req, res)=> {
     await validateBody(loginSchema, req.body);
-    const result = await authService.login(req.body);
+    const token = await authService.login(req.body);
+
+    res.json({token});
 }
