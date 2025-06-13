@@ -34,7 +34,12 @@ export const isSuperadmin = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  if (req.user.role !== "superadmin" || req.user.role !== "admin")
+  if (req.user.role !== "superadmin" && req.user.role !== "admin")
     throw HttpExeption(403, "Not allow");
   next();
 };
+
+export const isManager = (req, res, next)=> {
+    if(req.user.role === "user") throw HttpExeption(403, "Not allow");
+    next();
+}

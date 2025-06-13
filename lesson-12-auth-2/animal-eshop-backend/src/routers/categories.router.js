@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { getCategoriesController, addCategoryController } from "../controllers/categories.controller.js";
 
-import { authenticate, isAdmin, } from "../middlewares/authorization.js";
+import { authenticate, isAdmin } from "../middlewares/authorization.js";
 
 const categoriesRouter = Router();
 
