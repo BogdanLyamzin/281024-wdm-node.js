@@ -1,11 +1,9 @@
-
+import Navigation from "../pages/Navigation";
 
 function App() {
-
-
   return (
     <>
-     
+     <Navigation />
     </>
   )
 }
