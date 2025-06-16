@@ -1,9 +1,12 @@
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+import loginSchema from "./loginSchema";
 
 const LoginForm = () => {
   const {
@@ -11,13 +14,15 @@ const LoginForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
   const onSubmit = (values) => {
     console.log(values);
     reset();
   };
-
+  console.log(errors);
   return (
     <Paper
       variant="outlined"
@@ -32,6 +37,8 @@ const LoginForm = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
+          error={errors.email}
+          helperText={errors.email?.message}
           {...register("email")}
           label="email"
           variant="filled"
@@ -39,6 +46,8 @@ const LoginForm = () => {
           sx={{ marginBottom: "15px" }}
         />
         <TextField
+          error={errors.password}
+          helperText={errors.password?.message}
           {...register("password")}
           label="password"
           type="password"
