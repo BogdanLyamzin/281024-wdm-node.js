@@ -15,6 +15,7 @@ const Login = () => {
   const submitForm = async (payload) => {
     try {
         setLoading(true);
+        setError(null);
         const data = await loginUserApi(payload);
         console.log(data);
     } 

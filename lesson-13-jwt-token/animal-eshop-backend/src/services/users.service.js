@@ -3,14 +3,6 @@ import bcrypt from "bcrypt";
 import User from "../db/User.js";
 
 import HttpExeption from "../utils/HttpExeption.js";
-// const password = await bcrypt.hash("123456B$", 10);
-
-// await User.create({
-//     fullName: "Bohdan Liamzin",
-//     email: "bogdan@gmail.com",
-//     password,
-//     role: "superadmin"
-// });
 
 export const addAdmin = async (payload) => {
     const hashPassword = await bcrypt.hash(payload.password, 10);
