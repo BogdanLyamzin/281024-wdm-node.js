@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 
-import LoginForm from "../../modules/LoginForm/LoginForm";
+import Login from "../../modules/Login/Login";
 
 const LoginPage = () => {
   return (
@@ -12,7 +12,7 @@ const LoginPage = () => {
         height: "100vh"
       }}
     >
-      <LoginForm />
+      <Login />
     </Stack>
   );
 };
