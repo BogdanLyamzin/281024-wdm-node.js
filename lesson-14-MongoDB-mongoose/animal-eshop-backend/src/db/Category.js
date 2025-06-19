@@ -1,41 +1,22 @@
-import { DataTypes } from "sequelize";
+import {Schema, model} from "mongoose";
 
-import sequelize from "./sequelize.js";
-
-const Category = sequelize.define(
-    "category",
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            unique: {
-                args: true,
-                msg: "Category with this name already exist"
-            },
-        },
-        name: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: false,
-            validate: {
-                len: [2],
-            }
-        },
-        description: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            validate: {
-                len: [50],
-            }
-        },
-        image: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        }
+const categorySchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 2,
+        unique: true,
+    },
+    description: {
+        type: String,
+        required: true,
+        minlength: 50,
+    },
+    image: {
+        type: String,
     }
-);
+}, {versionKey: false, timestamps: true});
 
-// Category.sync();
+const Category = model("category", categorySchema);
 
 export default Category;
