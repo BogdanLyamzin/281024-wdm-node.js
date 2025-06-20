@@ -24,6 +24,9 @@ export const login = async ({ email, password }) => {
   };
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
+  user.token = token;
+  await user.save();
+
   return {
     token,
     user: {
@@ -32,3 +35,10 @@ export const login = async ({ email, password }) => {
     },
   };
 };
+
+export const logout = async ({id})=> {
+  const user = await User.findByPk(id);
+  if (!user) throw HttpExeption(401, `User not found`);
+  user.token = "";
+  await user.save();
+}

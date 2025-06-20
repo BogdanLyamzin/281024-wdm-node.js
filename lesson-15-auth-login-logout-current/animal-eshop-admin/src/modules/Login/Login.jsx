@@ -19,7 +19,7 @@ const Login = () => {
   const isLogin = useLogin();
   if(isLogin) return <Navigate to="/dashboard" />
 
-  const submitForm = async (payload) => dispatch(login(payload));
+  const submitForm = (payload) => dispatch(login(payload));
 
   return (
     <Paper

@@ -38,6 +38,10 @@ const User = sequalize.define("user", {
       },
     },
   },
+  token: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }
 });
 
 // User.sync({alter: true});

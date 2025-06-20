@@ -10,3 +10,11 @@ export const loginController = async(req, res)=> {
 
     res.json(result);
 }
+
+export const logoutController = async(req, res)=> {
+    await authService.logout(req.user);
+
+    res.json({
+        message: "Logout successfully"
+    })
+}
