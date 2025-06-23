@@ -1,0 +1,25 @@
+.header {
+    padding: 15px 25px;
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.userFullName {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
