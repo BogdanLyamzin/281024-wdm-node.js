@@ -6,9 +6,11 @@ export const getCategoriesController = async (req, res) => {
   res.json(result);
 };
 
-export const addCategoryController = async(req, res)=> {
-  console.log(req.body);
-    // const result = await categoriesService.addCategory(req.body); // throw new Error()
+export const addCategoryController = async (req, res) => {
+  const result = await categoriesService.addCategory({
+    payload: req.body,
+    file: req.file,
+  });
 
-    // res.status(201).json(result);
-}
+  res.status(201).json(result);
+};
