@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import authRouter from "./routers/auth.router.js";
 import usersRouter from "./routers/users.router.js";
 import categoriesRouter from "./routers/categories.router.js";
+import productsRouter from "./routers/products.router.js";
 
 const startServer = ()=> {
     const app = express();
@@ -18,6 +19,7 @@ const startServer = ()=> {
     app.use("/api/auth", authRouter);
     app.use("/api/users", usersRouter);
     app.use("/api/categories", categoriesRouter);
+    app.use("/api/products", productsRouter);
 
     app.use(notFoundHandler);
     app.use(errorHandler);
