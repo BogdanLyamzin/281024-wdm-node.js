@@ -3,6 +3,7 @@ import io from "socket.io-client";
 
 import { getOrdersApi } from "../../shared/api/orders-api";
 
+export const socket = io.connect(import.meta.env.VITE_WEBSOCKET_UTL);
 
 const Orders = ()=> {
     const [orders, setOrders] = useState([]);
@@ -21,13 +22,14 @@ const Orders = ()=> {
     }, []);
 
     useEffect(()=> {
-       const socket = io.connect("http://localhost:5000");
        socket.on("orderUpdated", data=> {
         const {operationType, fullDocument} = data;
         if(operationType === "insert") {
             setOrders(prevOrders => [...prevOrders, fullDocument]);
         }
        });
+       
+       return ()=> socket.off("orderUpdated");
     }, []);
 
     const elements = orders.map(({_id, address, phone, userId, items})=> (

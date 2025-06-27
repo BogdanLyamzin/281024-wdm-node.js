@@ -12,12 +12,15 @@ const startWebsocketServer = ()=> {
       },
     });
 
-    wsServer.on("connection", ()=> {
+    wsServer.on("connection", (socket)=> {
         console.log("New frontend connected");
+        socket.on("disconnect", ()=> {
+            console.log("User disconnected")
+        })
     });
 
     Order.watch().on("change", data => {
-        wsServer.emit("orderUpdated", data)
+        wsServer.emit("orderUpdated", data);
     });
     
     httpServer.listen(process.env.SOCKET_PORT, () =>
