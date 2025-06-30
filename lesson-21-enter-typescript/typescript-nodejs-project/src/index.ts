@@ -63,7 +63,7 @@ interface Book {
     year: number;
 }
 
-const createBook = (name: string, year: number, description: string | undefined): Book => {
+const createBook = (name: string, year: number, description: string): Book => {
     return {
         name,
         year,
