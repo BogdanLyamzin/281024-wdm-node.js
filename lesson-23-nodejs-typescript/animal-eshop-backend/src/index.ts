@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import connectDatabase from "./db/connectDatabase.js";
-import startServer from "./server.js";
+import connectDatabase from "./db/connectDatabase";
+import startServer from "./server";
 import startWebsocketServer from "./wsServer.js";
 
 const bootstrap = async () => {

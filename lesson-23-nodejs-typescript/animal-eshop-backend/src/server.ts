@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Express} from "express";
 import cors from "cors";
 
 import notFoundHandler from "./middlewares/notFoundHandler.js";
@@ -10,8 +10,18 @@ import categoriesRouter from "./routers/categories.router.js";
 import productsRouter from "./routers/products.router.js";
 import orderRouter from "./routers/orders.router.js";
 
-const startServer = ()=> {
-    const app = express();
+// type User = {
+//     calc: (value: number)=> void
+// }
+
+// const user: User = {
+//     calc(value) {
+//         console.log(value);
+//     }
+// }
+
+const startServer = (): void => {
+    const app: Express = express();
 
     app.use(cors());
     app.use(express.json());
@@ -26,9 +36,9 @@ const startServer = ()=> {
     app.use(notFoundHandler);
     app.use(errorHandler);
 
-    const port = process.env.PORT || 3000;
+    const port: number = Number(process.env.PORT) || 3000;
 
-    app.listen(port, ()=> console.log(`Server running on ${port} port`));
+    app.listen(port, () => console.log(`Server running on ${port} port`));
 }
 
 export default startServer;
