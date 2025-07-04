@@ -3,7 +3,8 @@ import createRole from "./functions/createRole";
 // import "./tuples";
 // import "./never";
 // import "./unknown";
-import "./interface-advanced";
+// import "./interface-advanced";
+import "./generic";
 
 type Role = "user" | "admin" | "manager";
 
