@@ -35,7 +35,6 @@ type ProductArgs = {
   stock?: boolean;
 }
 
-
 // interface IProduct {
 //   name: string;
 //   description: string;
@@ -90,16 +89,52 @@ class Product {
     return this._price;
   }
 
-  setPrice(value: number) {
+  setPrice(value: number): void {
     if(value > 0) {
         this._price = value;
     }
   }
+
+  calcDelivery(distance: number): number {
+    return distance * 2 + this._price * 0.01;
+  }
 }
 
 const product1 = new Product({
+  name: "Корм для котов",
+  description: "Лучший корм для котов 2021 года",
+  price: 12,
+});
+// console.log(product1);
+
+type Size = {
+  width: number;
+  height: number;
+  depth: number;
+}
+
+class Notebook extends Product {
+   size: Size;
+
+   constructor({name, description, price, size}: ProductArgs & {size: Size}) {
+    super({name, description, price});
+    this.size = size;
+   }
+
+   override calcDelivery(distance: number): number {
+    const sum = super.calcDelivery(distance);
+    return sum + 10;
+   }
+}
+
+const notebook = new Notebook({
   name: "Lenovo X120S",
   description: "Лучший ноутбук 2019 года",
   price: 1200,
+  size: {
+    width: 50,
+    height: 30,
+    depth: 3,
+  }
 });
-console.log(product1);
+console.log(notebook.calcDelivery(100));
