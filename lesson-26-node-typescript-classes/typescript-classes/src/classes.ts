@@ -71,6 +71,8 @@ class Product {
   public description: string;
   private _price: number;
   protected stock: boolean = false;
+  static statusList: string[] = ["inStock", "soonInStock", "notAvailable"];
+  private _status = "inStock";
 
   constructor({ name, description, price }:ProductArgs) {
     /*
@@ -83,6 +85,20 @@ class Product {
     // this.name = name;
     this.description = description;
     this._price = price;
+  }
+
+  static getCheapestProduct(arr: Product[]){
+    return [...arr].sort((a: Product, b: Product): number => a.getPrice() - b.getPrice())[0]
+  }
+
+  getStatus(): string {
+    return this._status;
+  }
+
+  setStatus(newstatus: string) {
+    if(Product.statusList.includes(newstatus)) {
+      this._status = newstatus;
+    }
   }
 
   getPrice(): number {
@@ -141,7 +157,8 @@ const notebook = new Notebook({
   }
 });
 // console.log(notebook.calcDelivery(100));
-// console.log(notebook.stock);
+// console.log(Product.statusList);
+console.log(Product.getCheapestProduct([notebook, product1]));
 
 class Admin {
   constructor(public name: string, public lastName: string) {
