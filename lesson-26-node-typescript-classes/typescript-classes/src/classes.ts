@@ -67,10 +67,10 @@ type ProductArgs = {
 // }
 
 class Product {
-  name: string;
-  description: string;
-  _price: number;
-  stock: boolean = false;
+  public name: string;
+  public description: string;
+  private _price: number;
+  protected stock: boolean = false;
 
   constructor({ name, description, price }:ProductArgs) {
     /*
@@ -123,6 +123,9 @@ class Notebook extends Product {
 
    override calcDelivery(distance: number): number {
     const sum = super.calcDelivery(distance);
+    if(this.stock) {
+      return sum;
+    }
     return sum + 10;
    }
 }
@@ -137,4 +140,12 @@ const notebook = new Notebook({
     depth: 3,
   }
 });
-console.log(notebook.calcDelivery(100));
+// console.log(notebook.calcDelivery(100));
+// console.log(notebook.stock);
+
+class Admin {
+  constructor(public name: string, public lastName: string) {
+    this.name = name;
+    this.lastName = lastName;
+  }
+}
