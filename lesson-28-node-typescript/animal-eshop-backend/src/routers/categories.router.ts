@@ -5,7 +5,7 @@ import {
   addCategoryController,
 } from "../controllers/categories.controller";
 
-import { authenticate, isAdmin } from "../middlewares/authorization.js";
+import { authenticate, isAdmin } from "../middlewares/authorization";
 import upload from "../middlewares/upload.js";
 
 const categoriesRouter: Router = Router();

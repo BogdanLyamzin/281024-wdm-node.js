@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { addProductController, getProductsController } from "../controllers/products.controller.js";
 
-import { authenticate, isAdmin } from "../middlewares/authorization.js";
+import { authenticate, isAdmin } from "../middlewares/authorization";
 import upload from "../middlewares/upload.js";
 
 const productsRouter: Router = Router();

@@ -7,13 +7,14 @@ import validateBody from "../utils/validateBody.js";
 import { loginSchema } from "../validation/auth.schema.js";
 
 import { AuthenticatedRequest } from "../interfaces";
+import {LoginResponse} from "../services/auth.service";
 
 export const loginController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   await validateBody(loginSchema, req.body);
-  const result = await authService.login(req.body);
+  const result: LoginResponse = await authService.login(req.body);
 
   res.json(result);
 };
@@ -22,7 +23,7 @@ export const getCurrentController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const result = await authService.getCurrent(
+  const result: LoginResponse = await authService.getCurrent(
     (req as AuthenticatedRequest).user
   );
 

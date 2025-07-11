@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import User from "../db/User.js";
+import User from "../db/User";
 
 import HttpExeption from "../utils/HttpExeption.js";
 
@@ -9,7 +9,7 @@ import { UserDocument } from "../db/User.js";
 
 const { JWT_SECRET } = process.env;
 
-type Payload = {
+export type TokenPayload = {
   id: string;
 };
 
@@ -19,7 +19,7 @@ interface LoginPayload {
   password: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   token: string;
   user: {
     email: string;
@@ -28,7 +28,7 @@ interface LoginResponse {
 }
 
 const createToken = (user: UserDocument): string => {
-  const payload: Payload = {
+  const payload: TokenPayload = {
     id: user._id as string,
   };
 
@@ -79,7 +79,7 @@ export const getCurrent = async (user: UserDocument): Promise<LoginResponse> => 
   };
 };
 
-export const logout = async ({ _id }: UserDocument) => {
+export const logout = async ({ _id }: UserDocument): Promise<void> => {
   const user: UserDocument | null = await User.findById(_id);
   if (!user) throw HttpExeption(401, `User not found`);
   user.token = "";

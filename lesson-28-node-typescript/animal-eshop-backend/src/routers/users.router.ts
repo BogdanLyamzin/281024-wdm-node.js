@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { addAdminController, changeAdminPasswordController } from "../controllers/users.controller.js";
 
-import { authenticate, isSuperadmin } from "../middlewares/authorization.js";
+import { authenticate, isSuperadmin } from "../middlewares/authorization";
 
 const usersRouter: Router = Router();
 
