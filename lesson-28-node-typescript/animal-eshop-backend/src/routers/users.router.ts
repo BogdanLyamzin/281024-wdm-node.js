@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { addAdminController, changeAdminPasswordController } from "../controllers/users.controller.js";
+import { addAdminController, changeAdminPasswordController } from "../controllers/users.controller";
 
 import { authenticate, isSuperadmin } from "../middlewares/authorization";
 

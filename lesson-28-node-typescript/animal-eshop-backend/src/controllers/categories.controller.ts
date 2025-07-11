@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 
 import * as categoriesService from "../services/categories.service.js";
 
+import { MulterRequest } from "../interfaces.js";
+
 export const getCategoriesController = async (req: Request, res: Response) => {
   const result = await categoriesService.getCategories();
 
@@ -11,7 +13,7 @@ export const getCategoriesController = async (req: Request, res: Response) => {
 export const addCategoryController = async (req: Request, res: Response) => {
   const result = await categoriesService.addCategory({
     payload: req.body,
-    file: req.file,
+    file: (req as MulterRequest).file,
   });
 
   res.status(201).json(result);

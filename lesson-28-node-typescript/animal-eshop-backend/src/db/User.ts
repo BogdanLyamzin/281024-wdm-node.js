@@ -9,7 +9,7 @@ export interface IUser {
   email: string;
   password: string;
   role: Role;
-  token?: string;
+  token?: string | null;
 };
 
 export type UserDocument = IUser & Document;

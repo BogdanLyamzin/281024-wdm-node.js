@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
-import User from "../db/User.js";
+import User from "../db/User";
 
-import HttpExeption from "../utils/HttpExeption.js";
+import HttpExeption from "../utils/HttpExeption";
 
 export const addAdmin = async (payload) => {
     const hashPassword = await bcrypt.hash(payload.password, 10);
