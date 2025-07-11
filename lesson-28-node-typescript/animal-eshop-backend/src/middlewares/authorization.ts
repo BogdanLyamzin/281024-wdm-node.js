@@ -8,6 +8,8 @@ import HttpExeption from "../utils/HttpExeption.js";
 
 import { TokenPayload } from "../services/auth.service";
 
+import { AuthenticatedRequest } from "../interfaces";
+
 const { JWT_SECRET } = process.env;
 
 export const authenticate = async (
@@ -29,11 +31,14 @@ export const authenticate = async (
     if (!user || !user.token || user.token !== token) {
       return next(HttpExeption(401, "User not found"));
     }
-
+    //@ts-expect-error
     req.user = user;
     next();
   } catch (error) {
-    throw HttpExeption(401, error.message);
+    if(error instanceof Error) {
+      throw HttpExeption(401, error.message);
+    }
+    throw HttpExeption(401, error);
   }
 };
 
@@ -42,17 +47,17 @@ export const isSuperadmin = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user.role !== "superadmin") throw HttpExeption(403, "Not allow");
+  if ((req as AuthenticatedRequest).user.role !== "superadmin") throw HttpExeption(403, "Not allow");
   next();
 };
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.role !== "superadmin" && req.user.role !== "admin")
+  if ((req as AuthenticatedRequest).user.role !== "superadmin" && (req as AuthenticatedRequest).user.role !== "admin")
     throw HttpExeption(403, "Not allow");
   next();
 };
 
 export const isManager = (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.role === "user") throw HttpExeption(403, "Not allow");
+  if ((req as AuthenticatedRequest).user.role === "user") throw HttpExeption(403, "Not allow");
   next();
 };
