@@ -65,8 +65,8 @@ export const login = async ({
   };
 };
 
-export const getCurrent = async (user) => {
-  const token = createToken(user);
+export const getCurrent = async (user: UserDocument): Promise<LoginResponse> => {
+  const token: string = createToken(user);
   user.token = token;
   await user.save();
 
@@ -79,8 +79,8 @@ export const getCurrent = async (user) => {
   };
 };
 
-export const logout = async ({ _id }) => {
-  const user = await User.findById(_id);
+export const logout = async ({ _id }: UserDocument) => {
+  const user: UserDocument | null = await User.findById(_id);
   if (!user) throw HttpExeption(401, `User not found`);
   user.token = "";
   await user.save();
