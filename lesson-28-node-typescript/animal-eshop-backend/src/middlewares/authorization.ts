@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import jwt from "jsonwebtoken";
 
-import User from "../db/User";
+import User, { UserDocument } from "../db/User";
 
 import HttpExeption from "../utils/HttpExeption.js";
 
@@ -27,12 +27,11 @@ export const authenticate = async (
 
   try {
     const { id } = jwt.verify(token, JWT_SECRET as string) as TokenPayload;
-    const user = await User.findById(id);
+    const user: UserDocument | null = await User.findById(id);
     if (!user || !user.token || user.token !== token) {
       return next(HttpExeption(401, "User not found"));
     }
-    //@ts-expect-error
-    req.user = user;
+    (req as AuthenticatedRequest).user = user;
     next();
   } catch (error) {
     if(error instanceof Error) {
