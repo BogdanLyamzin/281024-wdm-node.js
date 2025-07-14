@@ -11,6 +11,7 @@ export const getCategories = ()=> Category.find();
 export const getCategoryById = async id => {
     const category = await Category.findById(id);
     const products = await Product.find({category: category._id}).populate("category", "name");
+    
     return {
         category,
         products,
