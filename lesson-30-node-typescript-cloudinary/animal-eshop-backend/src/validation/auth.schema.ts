@@ -6,3 +6,5 @@ export const loginSchema = Yup.object({
     email: emailSchema,
     password: passwordSchema,
 });
+
+export type Login = Yup.InferType<typeof loginSchema>;
