@@ -8,12 +8,12 @@ import HttpExeption from "../utils/HttpExeption";
 import { UserDocument } from "../db/User";
 import { Login } from "../validation/auth.schema";
 
-interface ILoginResponse {
+export interface ILoginResponse {
   token: string;
   user: {
     email: string;
     fullName: string;
-  }
+  };
 }
 
 interface IUserFind {
@@ -31,11 +31,16 @@ const createToken = (user: UserDocument): string => {
     id: user._id,
   };
 
-  const token: string = jwt.sign(payload, JWT_SECRET as string, { expiresIn: "24h" });
+  const token: string = jwt.sign(payload, JWT_SECRET as string, {
+    expiresIn: "24h",
+  });
   return token;
-}
+};
 
-export const login = async ({ email, password }: Login): Promise<ILoginResponse> => {
+export const login = async ({
+  email,
+  password,
+}: Login): Promise<ILoginResponse> => {
   const userFind: IUserFind = {
     email,
   };
@@ -44,7 +49,10 @@ export const login = async ({ email, password }: Login): Promise<ILoginResponse>
 
   if (!user) throw HttpExeption(401, `User with email=${email} not found`); // throw HttpExeption(401, "Email or password invalid");
 
-  const passwordCompare: boolean = await bcrypt.compare(password, user.password);
+  const passwordCompare: boolean = await bcrypt.compare(
+    password,
+    user.password
+  );
   if (!passwordCompare) throw HttpExeption(401, `Password invalid`);
 
   const token: string = createToken(user);
@@ -60,7 +68,9 @@ export const login = async ({ email, password }: Login): Promise<ILoginResponse>
   };
 };
 
-export const getCurrent = async (user: UserDocument): Promise<ILoginResponse> => {
+export const getCurrent = async (
+  user: UserDocument
+): Promise<ILoginResponse> => {
   const token: string = createToken(user);
   user.token = token;
   await user.save();
@@ -72,11 +82,11 @@ export const getCurrent = async (user: UserDocument): Promise<ILoginResponse> =>
       fullName: user.fullName,
     },
   };
-}
+};
 
-export const logout = async ({_id}: UserDocument): Promise <void> => {
+export const logout = async ({ _id }: UserDocument): Promise<void> => {
   const user: UserDocument | null = await User.findById(_id);
   if (!user) throw HttpExeption(401, `User not found`);
   user.token = "";
   await user.save();
-}
+};

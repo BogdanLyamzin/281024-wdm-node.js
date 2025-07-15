@@ -14,7 +14,7 @@ interface User {
 
 export type UserDocument = User & Document;
 
-const userSchema = new Schema({
+const userSchema = new Schema<UserDocument>({
   fullName: {
     type: String,
     required: true,
@@ -43,7 +43,7 @@ const userSchema = new Schema({
   }
 }, {versionKey: false, timestamps: true});
 
-const User = model("user", userSchema);
+const User = model<UserDocument>("user", userSchema);
 
 export default User;
 
