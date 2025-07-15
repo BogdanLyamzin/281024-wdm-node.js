@@ -7,7 +7,7 @@
 // import "./generic";
 // import "./classes";
 // import "./abstract-class";
-import "./namespaces";
+// import "./namespaces";
 // import "./file";
 
 // type Role = "user" | "admin" | "manager";
@@ -31,3 +31,16 @@ import "./namespaces";
 
 // const adminRole = createRole("admin", ["/dashboard", "/categories", "/products", "/admins"]);
 // console.log(adminRole);
+
+interface ISlice <T> {
+    length: number;
+    slice(start: number, end: number): T
+}
+
+function limitByLength<T extends ISlice<T>>(value: T, maxLength: number): T | undefined {
+
+        return value.slice(0, maxLength);
+    
+  
+    // throw new Error('Unsupported type');
+  }
