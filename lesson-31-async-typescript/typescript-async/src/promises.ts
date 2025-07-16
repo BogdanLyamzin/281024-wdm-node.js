@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 const getPromise = (delay = 2000) =>
   new Promise<string>((resolve, reject) => {
@@ -58,13 +58,13 @@ const getFirstPost = async (): Promise<void> => {
 
 // getFirstPost();
 
-const getAllPosts = async () => {
-  const { data } = await instance.get("/posts");
+const getAllPosts = async (): Promise<IPost[]> => {
+  const { data } = await instance.get<IPost[]>("/posts");
   return data;
 };
 
 const getAllUsers = async () => {
-  const { data } = await instance.get("/user");
+  const { data } = await instance.get("/users");
   return data;
 };
 
@@ -90,10 +90,18 @@ const runParallePromises = async () => {
 
 // runParallePromises();
 
+type PromiseStatus = "fullfiled" | "rejected";
+
+interface IPromiseAllSettledResponse {
+  status: PromiseStatus;
+  value?: unknown;
+  reason?: AxiosError;
+}
+
 const getPostsAndUsersWithError = async () => {
   // @ts-expect-error
   const results = await Promise.allSettled([getAllPosts(), getAllUsers()]);
-  results.forEach(({ status, value, reason }) => {
+  results.forEach(({ status, value, reason }: IPromiseAllSettledResponse): void => {
     if (status === "fullfiled") {
       console.log(value);
     } else {
