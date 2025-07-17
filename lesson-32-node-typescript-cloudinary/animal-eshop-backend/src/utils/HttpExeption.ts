@@ -11,7 +11,8 @@ const messageList: IMessageList = {
     401: "Unauthorized",
     403: "Forbidden",
     404: "Not Found",
-    409: "Conflict"
+    409: "Conflict",
+    500: "Server error"
 }
 
 // interface IUser {

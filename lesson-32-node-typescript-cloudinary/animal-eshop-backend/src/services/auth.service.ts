@@ -20,7 +20,7 @@ interface IUserFind {
   email: string;
 }
 
-interface IJWTTokenPayload {
+export interface IJWTTokenPayload {
   id: unknown;
 }
 
