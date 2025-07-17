@@ -10,7 +10,7 @@ import HttpExeption from "../utils/HttpExeption";
 
 import { UserDocument } from '../db/User';
 
-export const addAdminController = async (req: Request, res: Response) => {
+export const addAdminController = async (req: Request, res: Response): Promise<void> => {
   await validateBody(adminAddSchema, req.body);
   const result: UserDocument = await usersService.addAdmin(req.body);
 
@@ -19,7 +19,7 @@ export const addAdminController = async (req: Request, res: Response) => {
   });
 };
 
-export const changeAdminPasswordController = async(req: Request, res: Response)=> {
+export const changeAdminPasswordController = async(req: Request, res: Response): Promise<void> => {
   await validateBody(adminChangePasswordSchema, req.body);
   const id = req.params.id as string;
   const result: UserDocument | null = await usersService.changeAdminPassword(id, req.body);
