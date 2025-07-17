@@ -1,5 +1,7 @@
 import {Schema, model, Document} from "mongoose";
 
+import { handleSaveError, setUpdateSettings } from "./hooks";
+
 import { emailValidation } from "../constants/users.constants";
 
 import { Role } from "../typescript/types";
@@ -42,6 +44,12 @@ const userSchema = new Schema<UserDocument>({
     type: String,
   }
 }, {versionKey: false, timestamps: true});
+
+userSchema.post("save", handleSaveError);
+
+userSchema.pre("findOneAndUpdate", setUpdateSettings);
+
+userSchema.post("findOneAndUpdate", handleSaveError);
 
 const User = model<UserDocument>("user", userSchema);
 

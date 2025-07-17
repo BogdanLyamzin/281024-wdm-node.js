@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 import * as usersService from "../services/users.service";
 
 import validateBody from "../utils/validateBody";
@@ -6,19 +8,21 @@ import { adminAddSchema, adminChangePasswordSchema } from "../validation/users.s
 
 import HttpExeption from "../utils/HttpExeption";
 
-export const addAdminController = async (req, res) => {
+import { UserDocument } from '../db/User';
+
+export const addAdminController = async (req: Request, res: Response) => {
   await validateBody(adminAddSchema, req.body);
-  const result = await usersService.addAdmin(req.body);
+  const result: UserDocument = await usersService.addAdmin(req.body);
 
   res.status(201).json({
     message: `user with email ${result.email}`,
   });
 };
 
-export const changeAdminPasswordController = async(req, res)=> {
+export const changeAdminPasswordController = async(req: Request, res: Response)=> {
   await validateBody(adminChangePasswordSchema, req.body);
-  const {id} = req.params;
-  const result = await usersService.changeAdminPassword(id, req.body);
+  const id = req.params.id as string;
+  const result: UserDocument | null = await usersService.changeAdminPassword(id, req.body);
   if(!result) throw HttpExeption(404, `Admin with id=${id} not found`);
 
   res.json({

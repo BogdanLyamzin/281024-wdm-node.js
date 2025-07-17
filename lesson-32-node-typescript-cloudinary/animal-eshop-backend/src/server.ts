@@ -5,7 +5,7 @@ import notFoundHandler from "./middlewares/notFoundHandler";
 import errorHandler from "./middlewares/errorHandler";
 
 import authRouter from "./routers/auth.router";
-// import usersRouter from "./routers/users.router";
+import usersRouter from "./routers/users.router";
 // import categoriesRouter from "./routers/categories.router";
 // import productsRouter from "./routers/products.router";
 // import orderRouter from "./routers/orders.router";
@@ -18,7 +18,7 @@ const startServer = (): void => {
     app.use(express.static("public"));
 
     app.use("/api/auth", authRouter);
-    // app.use("/api/users", usersRouter);
+    app.use("/api/users", usersRouter);
     // app.use("/api/categories", categoriesRouter);
     // app.use("/api/products", productsRouter);
     // app.use("/api/orders", orderRouter);
