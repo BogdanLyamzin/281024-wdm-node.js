@@ -1,7 +1,9 @@
-import { rename } from "node:fs/promises";
+import { rename, unlink } from "node:fs/promises";
 import * as path from "node:path";
 
 import HttpExeption from "../utils/HttpExeption";
+
+import cloudinary from "../utils/cloudinary";
 
 import Product, { ProductDocument } from "../db/Product";
 import Category, { CategoryDocument } from "../db/Category";
@@ -40,9 +42,15 @@ export const addCategory = async ({
   if (!file) {
     throw HttpExeption(404, "image required");
   }
-  const { path: oldPath, filename }: Express.Multer.File = file;
-  const newPath: string = path.join(categoriesDir, filename);
-  await rename(oldPath, newPath);
-  const image: string = path.join("categories", filename);
+  // const { path: oldPath, filename }: Express.Multer.File = file;
+  // const newPath: string = path.join(categoriesDir, filename);
+  // await rename(oldPath, newPath);
+  // const image: string = path.join("categories", filename);
+  const {url: image} = await cloudinary.uploader.upload(file.path, {
+    folder: "categories",
+    use_filename: true,
+  });
+  await unlink(file.path);
+
   return Category.create({ ...payload, image });
 };
