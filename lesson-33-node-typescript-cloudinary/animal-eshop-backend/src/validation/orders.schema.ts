@@ -8,3 +8,5 @@ export const addOrderSchema = Yup.object({
         count: Yup.number().min(1).required()
     }))
 });
+
+export type OrderAddType = Yup.InferType<typeof addOrderSchema>;

@@ -8,7 +8,7 @@ import authRouter from "./routers/auth.router";
 import usersRouter from "./routers/users.router";
 import categoriesRouter from "./routers/categories.router";
 import productsRouter from "./routers/products.router";
-// import orderRouter from "./routers/orders.router";
+import orderRouter from "./routers/orders.router";
 
 const startServer = (): void => {
     const app: Express = express();
@@ -21,7 +21,7 @@ const startServer = (): void => {
     app.use("/api/users", usersRouter);
     app.use("/api/categories", categoriesRouter);
     app.use("/api/products", productsRouter);
-    // app.use("/api/orders", orderRouter);
+    app.use("/api/orders", orderRouter);
 
     app.use(notFoundHandler);
     app.use(errorHandler);
