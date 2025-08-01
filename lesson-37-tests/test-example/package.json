@@ -1,0 +1,28 @@
+{
+  "name": "animal-eshop-backend",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "start": "npm run build && node dist/index",
+    "build": "tsc",
+    "dev": "nodemon src/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "cross-env": "^10.0.0",
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@types/luxon": "^3.7.1",
+    "luxon": "^3.7.1",
+    "moment": "^2.30.1"
+  }
+}
