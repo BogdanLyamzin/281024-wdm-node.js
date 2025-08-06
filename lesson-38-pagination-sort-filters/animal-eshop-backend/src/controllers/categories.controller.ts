@@ -10,14 +10,27 @@ import { CategoryDocument } from "../db/Category";
 
 import { ICategoriesSearch } from "../services/categories.service";
 
+import parsePaginationParams from "../utils/parsePaginationParams";
+import parseSortParams from "../utils/parseSortParams";
+import parseCategoryFilters from "../utils/filters/parseCategoryFilters";
+
+import { categorySortFields } from "../db/Category";
+
 export const getCategoriesController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const result = await categoriesService.getCategories(
-    //@ts-expect-error
-    req.query as ICategoriesSearch
-  );
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query, categorySortFields);
+  const filters = parseCategoryFilters(req.query);
+
+  const result = await categoriesService.getCategories({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filters,
+  });
 
   res.json(result);
 };

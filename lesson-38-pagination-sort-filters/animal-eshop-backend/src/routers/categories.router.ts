@@ -7,11 +7,10 @@ import {
 
 import { authenticate, isAdmin } from "../middlewares/authorization";
 import upload from "../middlewares/upload";
-import parsePaginationParams from "../middlewares/parsePaginationParams";
 
 const categoriesRouter: Router = Router();
 
-categoriesRouter.get("/", parsePaginationParams, getCategoriesController);
+categoriesRouter.get("/", getCategoriesController);
 
 categoriesRouter.post(
   "/",

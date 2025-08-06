@@ -1,4 +1,5 @@
 import { rename, unlink } from "node:fs/promises";
+import { SortOrder } from "mongoose";
 import * as path from "node:path";
 
 import HttpExeption from "../utils/HttpExeption";
@@ -8,6 +9,7 @@ import cloudinary from "../utils/cloudinary";
 import Product, { ProductDocument } from "../db/Product";
 import Category, { CategoryDocument } from "../db/Category";
 import { CategoryAddType } from "../validation/category.schema";
+import { CategoryFilters } from "../utils/filters/parseCategoryFilters";
 
 interface IAddCategory {
   payload: CategoryAddType;
@@ -22,6 +24,9 @@ interface ICategoryWithProducts {
 export interface ICategoriesSearch {
   page: number;
   perPage: number;
+  sortBy: string;
+  sortOrder: SortOrder;
+  filters: CategoryFilters;
 }
 
 interface ICategories {
@@ -32,10 +37,44 @@ interface ICategories {
 
 const categoriesDir: string = path.resolve("public", "categories");
 
-export const getCategories = async ({page, perPage}: ICategoriesSearch): Promise<ICategories> => {
+export const getCategories = async ({
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+  filters,
+}: ICategoriesSearch): Promise<ICategories> => {
+  const query = Category.find();
+
+  if(filters.isImage !== undefined) {
+    if(filters.isImage) {
+      query.where("image").ne("");
+    }
+    else {
+      query.where("image").equals("");
+    }
+  }
+  // if(filters.minPrice) {
+  //   query.where("price").gte(filters.minPrice)
+  // }
+  // if(filters.maxPrice) {
+  //   query.where("price").lte(filters.maxPrice)
+  // }
+
+  const total = await Category.find().merge(query).countDocuments();
+  // const total = await Category.find(query).countDocuments();
+  // const total = await Category.find().countDocuments(query);
+
   const skip = (page - 1) * perPage;
-  const data: CategoryDocument[] = await Category.find().skip(skip).limit(perPage);
-  const total = await Category.countDocuments();
+  const data: CategoryDocument[] = await query
+    .skip(skip)
+    .limit(perPage)
+    .sort({ [sortBy]: sortOrder });
+    // const [total, data] = Promise.all([Category.find().merge(query).countDocuments(), query
+    //   .skip(skip)
+    //   .limit(perPage)
+    //   .sort({ [sortBy]: sortOrder })]);
+
   const totalPages = Math.ceil(total / perPage);
 
   return {

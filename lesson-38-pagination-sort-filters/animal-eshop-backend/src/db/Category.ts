@@ -29,6 +29,8 @@ const categorySchema = new Schema<ICategory>({
     }
 }, {versionKey: false, timestamps: true});
 
+export const categorySortFields = ["_id", "updatedAt", "createdAt"];
+
 categorySchema.post("save", handleSaveError);
 
 categorySchema.pre("findOneAndUpdate", setUpdateSettings);
