@@ -1,0 +1,16 @@
+.list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .post {
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .error {
+    color: red;
+  }

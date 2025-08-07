@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .post-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .post {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 15px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="post-list" id="post-list"></ul>
+    <div id="loading"></div>
+    <!-- <button type="button" id="load-more-btn">Load more</button> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const postList = document.querySelector("#post-list");
+      const renderPosts = (posts) => {
+        const elements = posts.map(
+          (post) => `<li class="post">
+                <h5>${post.title}</h5>
+                <p>${post.body}</p>
+                </li>`
+        );
+        postList.insertAdjacentHTML("beforeend", elements.join(""));
+      };
+
+      let _page = 1;
+      const _limit = 20;
+      const fetchPosts = async () => {
+        try {
+          const { data } = await axios.get(
+            "https://jsonplaceholder.typicode.com/posts",
+            {
+              params: {
+                _page,
+                _limit,
+              },
+            }
+          );
+          renderPosts(data);
+          _page += 1;
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchPosts().then(() => {
+        const loading = document.querySelector("#loading");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              fetchPosts();
+            }
+          },
+          {
+            root: null,
+            threshold: 0,
+            rootMargin: "150px",
+          }
+        );
+        observer.observe(loading);
+      });
+
+      //   const loadMore = document.querySelector("#load-more-btn");
+      //   loadMore.addEventListener("click", fetchPosts);
+    </script>
+  </body>
+</html>
