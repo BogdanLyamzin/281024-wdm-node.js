@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .main {
+        height: 120vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        border: 1px solid;
+        height: 200px;
+      }
+      .container.visible {
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">Some content</div>
+    <div class="container" id="container"></div>
+    <script>
+        const colors = ["red", "blue", "yellow"];
+      const container = document.getElementById("container");
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          console.log("Observer function");
+          if (entries[0].isIntersecting) {
+            entries[0].target.classList.add("visible");
+            observer.unobserve(entries[0].target);
+          }
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "50px",
+        }
+      );
+
+      observer.observe(container);
+    </script>
+  </body>
+</html>
