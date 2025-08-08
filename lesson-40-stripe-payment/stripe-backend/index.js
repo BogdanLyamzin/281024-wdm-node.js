@@ -3,7 +3,7 @@ import cors from "cors";
 import Stripe from "stripe";
 import "dotenv/config";
 
-const { STRIPE_SECRET_KEY, STRIPE_FRONTEND_URL } = process.env;
+const { STRIPE_SECRET_KEY, STRIPE_FRONTEND_URL, STRIPE_WEBHOOK_SECRET } = process.env;
 
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
@@ -35,5 +35,22 @@ app.post("/api/payment/payment-session", async (req, res) => {
 
   res.json(session);
 });
+
+app.post("/api/payment/payment-webhook", async(req, res)=> {
+    const sig = req.headers["stripe-signature"];
+    let event;
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, STRIPE_WEBHOOK_SECRET);
+    }
+    catch(error) {
+        console.log(error);
+        return res.status(400).json({
+            message: "Webhook error"
+        });
+    }
+    if(event.type === "payment_intent.succeeded") {
+        const payment_intent = event.data.object;
+    }
+})
 
 app.listen(3000, () => console.log("Server running on 3000 PORT"));
