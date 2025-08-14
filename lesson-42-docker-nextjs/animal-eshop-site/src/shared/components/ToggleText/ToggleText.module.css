@@ -1,0 +1,14 @@
+.truncatedText {
+    display: -webkit-box;        /* Используем flex-контейнер для WebKit */
+    -webkit-box-orient: vertical; /* Вертикальная ориентация */
+    -webkit-line-clamp: 1;       /* Ограничиваем до 3 строк */
+    overflow: hidden;             /* Скрываем лишний текст */
+    text-overflow: ellipsis;      /* Добавляем троеточие */
+    text-align: center;
+    max-width: 400px;
+  }
+
+.truncatedText.open {
+    -webkit-line-clamp: initial;  
+    overflow: auto;
+}
